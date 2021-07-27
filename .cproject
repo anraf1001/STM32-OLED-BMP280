@@ -407,6 +407,20 @@
         	
     </storageModule>
     	
-    <storageModule moduleId="refreshScope"/>
+    <storageModule moduleId="refreshScope" versionNumber="2">
+        		
+        <configuration configurationName="Debug">
+            			
+            <resource resourceType="PROJECT" workspacePath="/OLEDBMP280_cpp"/>
+            		
+        </configuration>
+        		
+        <configuration configurationName="Release">
+            			
+            <resource resourceType="PROJECT" workspacePath="/OLEDBMP280_cpp"/>
+            		
+        </configuration>
+        	
+    </storageModule>
     
 </cproject>
