@@ -3,12 +3,17 @@
 #include <memory>
 
 #include "I2C_MockHandler.hpp"
+#include "OLED_consts.hpp"
 #include "OLED_SSD1306.hpp"
 
 using namespace ::testing;
 
 TEST(oledTestSuite, shouldRunMemWriteDuringInit) {
-    NiceMock<I2C_MockHandler> hi2c;
-    EXPECT_CALL(hi2c, Mem_Write(0x3C, 0x00, 1, NotNull(), 1)).Times(AtLeast(1));
+    constexpr uint16_t bytesInCom = 1;
+    constexpr int numOfComsToSend = 25;
+
+    I2C_MockHandler hi2c;
+    EXPECT_CALL(hi2c, Mem_Write(_, oled::commandsMemAddress, bytesInCom, NotNull(), bytesInCom)).Times(numOfComsToSend);
+
     OLED_SSD1306 oled{&hi2c};
 }
