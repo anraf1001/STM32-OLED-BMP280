@@ -43,7 +43,7 @@ constexpr uint16_t SET_VERTICAL_SCROLL_AREA = 0xA3;              ///< Set scroll
 constexpr uint16_t BUFFER_SIZE = LCDHEIGHT * LCDWIDTH / 8;
 
 void OLED_SSD1306::sendCommand(uint8_t command) {
-    hi2c_->Mem_Write(oledI2CAddress, commandsMemAddress, 1, &command, 1);
+    [[maybe_unused]]auto status = hi2c_->Mem_Write(oledI2CAddress, commandsMemAddress, 1, &command, 1);
 }
 
 void OLED_SSD1306::sendBuffer() {

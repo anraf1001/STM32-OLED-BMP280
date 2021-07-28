@@ -107,7 +107,7 @@ int main(void)
   oled.display();
 
   for(uint8_t i = 0; i < 30; i++) {
-	  oled.drawPixel(i, 20, PixelColor::WHITE);
+	  oled.drawPixel(i, i+20, PixelColor::WHITE);
   }
   oled.display();
   /* USER CODE END 2 */
