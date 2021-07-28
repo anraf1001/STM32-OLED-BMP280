@@ -26,6 +26,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "GFX_BW.hpp"
 #include "I2C_HandleInterface.hpp"
 #include "I2C_Handler.hpp"
 #include "OLED_SSD1306.hpp"
@@ -102,11 +103,9 @@ int main(void)
   OLED_SSD1306 oled{&i2c1Handler};
 
   oled.clear(PixelColor::BLACK);
-  oled.display();
 
-  for(uint8_t i = 0; i < 30; i++) {
-	  oled.drawPixel(i, 30, PixelColor::WHITE);
-  }
+  gfx::drawLine(oled, 10, 10, 100, 50, PixelColor::WHITE);
+
   oled.display();
   /* USER CODE END 2 */
 
