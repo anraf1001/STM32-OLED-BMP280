@@ -4,6 +4,7 @@
 
 #include "I2C_HandleInterface.hpp"
 #include "OLED_consts.hpp"
+#include "PixelColor.hpp"
 
 namespace oled {
 constexpr uint16_t oledI2CAddress = 0x3C;
@@ -14,18 +15,12 @@ constexpr uint16_t LCDHEIGHT = 64;
 constexpr uint16_t bufferSize = LCDHEIGHT * LCDWIDTH / 8;
 }  // namespace oled
 
-enum class PixelColor : uint8_t {
-    BLACK,
-    WHITE,
-    INVERTED
-};
-
 template <typename T>
 class OLED_SSD1306 {
 public:
     explicit OLED_SSD1306(I2C_HandleInterface<T>* hi2c);
 
-    void drawPixel(uint16_t x, uint16_t y, PixelColor color);
+    void drawPixel(int16_t x, int16_t y, PixelColor color);
     void clear(PixelColor color);
     void display();
 
@@ -112,7 +107,7 @@ void OLED_SSD1306<T>::sendBuffer() {
 }
 
 template <typename T>
-void OLED_SSD1306<T>::drawPixel(uint16_t x, uint16_t y, PixelColor color) {
+void OLED_SSD1306<T>::drawPixel(int16_t x, int16_t y, PixelColor color) {
     if (x > 0 && x < oled::LCDWIDTH && y > 0 && y < oled::LCDHEIGHT) {
         switch (color) {
         case PixelColor::WHITE:
