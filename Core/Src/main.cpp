@@ -100,14 +100,14 @@ int main(void)
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
-  std::shared_ptr<I2C_HandleInterface> i2c1Handler = std::make_shared<I2C_Handler>(&hi2c1);
+  auto i2c1Handler = std::make_shared<I2C_Handler>(&hi2c1);
   OLED_SSD1306 oled{i2c1Handler};
 
   oled.clear(PixelColor::BLACK);
   oled.display();
 
   for(uint8_t i = 0; i < 30; i++) {
-	  oled.drawPixel(i, i+20, PixelColor::WHITE);
+	  oled.drawPixel(i, 30, PixelColor::WHITE);
   }
   oled.display();
   /* USER CODE END 2 */
