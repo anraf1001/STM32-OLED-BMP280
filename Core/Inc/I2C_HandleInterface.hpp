@@ -7,10 +7,18 @@ enum class HAL_Status : uint8_t {
     HAL_TIMEOUT = 0x03U
 };
 
+template <typename T>
 class I2C_HandleInterface {
 public:
-    virtual ~I2C_HandleInterface() = default;
+    HAL_Status Mem_Write(uint16_t devAddress, uint16_t memAddress, uint16_t memAddSize, uint8_t* data, uint16_t size) {
+        return static_cast<T&>(*this).Mem_Write(devAddress, memAddress, memAddSize, data, size);
+    }
 
-    virtual HAL_Status Mem_Write(uint16_t devAddress, uint16_t memAddress, uint16_t memAddSize, uint8_t* data, uint16_t size) = 0;
-    virtual HAL_Status Mem_Write_DMA(uint16_t devAddress, uint16_t memAddress, uint16_t memAddSize, uint8_t* data, uint16_t size) = 0;
+    HAL_Status Mem_Write_DMA(uint16_t devAddress, uint16_t memAddress, uint16_t memAddSize, uint8_t* data, uint16_t size) {
+        return static_cast<T&>(*this).Mem_Write_DMA(devAddress, memAddress, memAddSize, data, size);
+    }
+
+private:
+    I2C_HandleInterface() = default;
+    friend T;
 };

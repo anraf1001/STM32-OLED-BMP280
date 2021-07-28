@@ -9,5 +9,5 @@ set(FLAGS -Wall -Werror -Wextra -pedantic -g)
 
 include_directories(Inc)
 
-add_subdirectory(Src)
+# add_subdirectory(Src)
 add_subdirectory(UT)

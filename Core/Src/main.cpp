@@ -26,8 +26,6 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <memory>
-
 #include "I2C_HandleInterface.hpp"
 #include "I2C_Handler.hpp"
 #include "OLED_SSD1306.hpp"
@@ -100,8 +98,8 @@ int main(void)
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
-  auto i2c1Handler = std::make_shared<I2C_Handler>(&hi2c1);
-  OLED_SSD1306 oled{i2c1Handler};
+  I2C_Handler i2c1Handler{&hi2c1};
+  OLED_SSD1306 oled{&i2c1Handler};
 
   oled.clear(PixelColor::BLACK);
   oled.display();

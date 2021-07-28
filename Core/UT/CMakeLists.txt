@@ -13,7 +13,8 @@ FetchContent_MakeAvailable(googletest)
 
 add_executable(${PROJECT_NAME} ${UT_SRC})
 target_compile_options(${PROJECT_NAME} PRIVATE ${FLAGS})
-target_link_libraries(${PROJECT_NAME} PUBLIC ${PROJECT_NAME}-lib gtest_main gmock)
+# target_link_libraries(${PROJECT_NAME} PUBLIC ${PROJECT_NAME}-lib gtest_main gmock)
+target_link_libraries(${PROJECT_NAME} PUBLIC gtest_main gmock)
 target_link_options(${PROJECT_NAME} PRIVATE -fsanitize=address -fsanitize=undefined)
 
 include(GoogleTest)
