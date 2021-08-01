@@ -29,8 +29,7 @@ private:
     void sendBuffer();
 
     uint16_t positionInBuffer(uint16_t x, uint16_t y);
-    uint8_t prepareWhiteColorByte(uint16_t y);
-    uint8_t prepareBlackColorByte(uint16_t y);
+    uint8_t prepareColorByte(uint16_t y);
 
     I2C_HandleInterface<T>* hi2c_;
     std::array<uint8_t, oled::bufferSize> buffer_{};
@@ -83,13 +82,8 @@ uint16_t OLED_SSD1306<T>::positionInBuffer(uint16_t x, uint16_t y) {
 }
 
 template <typename T>
-uint8_t OLED_SSD1306<T>::prepareWhiteColorByte(uint16_t y) {
+uint8_t OLED_SSD1306<T>::prepareColorByte(uint16_t y) {
     return 1 << (y & 7);
-}
-
-template <typename T>
-uint8_t OLED_SSD1306<T>::prepareBlackColorByte(uint16_t y) {
-    return ~prepareWhiteColorByte(y);
 }
 
 template <typename T>
@@ -111,15 +105,15 @@ void OLED_SSD1306<T>::drawPixel(int16_t x, int16_t y, PixelColor color) {
     if (x > 0 && x < oled::LCDWIDTH && y > 0 && y < oled::LCDHEIGHT) {
         switch (color) {
         case PixelColor::WHITE:
-            buffer_[positionInBuffer(x, y)] |= prepareWhiteColorByte(y);
+            buffer_[positionInBuffer(x, y)] |= prepareColorByte(y);
             break;
 
         case PixelColor::BLACK:
-            buffer_[positionInBuffer(x, y)] &= prepareBlackColorByte(y);
+            buffer_[positionInBuffer(x, y)] &= ~prepareColorByte(y);
             break;
 
         case PixelColor::INVERTED:
-            buffer_[positionInBuffer(x, y)] ^= prepareWhiteColorByte(y);
+            buffer_[positionInBuffer(x, y)] ^= prepareColorByte(y);
             break;
         }
     }
