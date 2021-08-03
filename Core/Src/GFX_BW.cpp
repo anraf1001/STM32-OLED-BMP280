@@ -86,4 +86,40 @@ void drawFillRectangle(OLED_SSD1306<I2C_Handler>& oled, int16_t x, int16_t y, ui
         drawFastVLine(oled, i, y, height, color);
     }
 }
+
+//
+// Circle drawing
+//
+void drawCircle(OLED_SSD1306<I2C_Handler>& oled, int16_t x0, int16_t y0, uint16_t radius, PixelColor color) {
+    oled.drawPixel(x0, y0 + radius, color);
+    oled.drawPixel(x0, y0 - radius, color);
+    oled.drawPixel(x0 + radius, y0, color);
+    oled.drawPixel(x0 - radius, y0, color);
+
+    int16_t x{};
+    int16_t y = radius;
+    int16_t f = 1 - radius;
+    int16_t ddF_x = 1;
+    int16_t ddF_y = -2 * radius;
+    while (x < y) {
+        if (f >= 0) {
+            y--;
+            ddF_y += 2;
+            f += ddF_y;
+        }
+        x++;
+        ddF_x += 2;
+        f += ddF_x;
+
+        oled.drawPixel(x0 + x, y0 + y, color);
+        oled.drawPixel(x0 - x, y0 + y, color);
+        oled.drawPixel(x0 + x, y0 - y, color);
+        oled.drawPixel(x0 - x, y0 - y, color);
+
+        oled.drawPixel(x0 + y, y0 + x, color);
+        oled.drawPixel(x0 - y, y0 + x, color);
+        oled.drawPixel(x0 + y, y0 - x, color);
+        oled.drawPixel(x0 - y, y0 - x, color);
+    }
+}
 }  // namespace gfx

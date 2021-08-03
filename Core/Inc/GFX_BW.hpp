@@ -11,4 +11,6 @@ void drawLine(OLED_SSD1306<I2C_Handler>& oled, int16_t x_start, int16_t y_start,
 
 void drawRectangle(OLED_SSD1306<I2C_Handler>& oled, int16_t x, int16_t y, uint16_t width, uint16_t height, PixelColor color);
 void drawFillRectangle(OLED_SSD1306<I2C_Handler>& oled, int16_t x, int16_t y, uint16_t width, uint16_t height, PixelColor color);
+
+void drawCircle(OLED_SSD1306<I2C_Handler>& oled, int16_t x0, int16_t y0, uint16_t radius, PixelColor color);
 }  // namespace gfx
