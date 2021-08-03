@@ -70,4 +70,14 @@ void drawLine(OLED_SSD1306<I2C_Handler>& oled, int16_t x_start, int16_t y_start,
         writeLine(oled, x_start, y_start, x_end, y_end, color);
     }
 }
+
+//
+// Rectangle drawing
+//
+void drawRectangle(OLED_SSD1306<I2C_Handler>& oled, int16_t x, int16_t y, uint16_t width, uint16_t height, PixelColor color) {
+	drawFastHLine(oled, x, y, width, color);
+	drawFastHLine(oled, x, y + height - 1, width, color);
+	drawFastVLine(oled, x, y, height, color);
+	drawFastVLine(oled, x + width - 1, y, height, color);
+}
 }  // namespace gfx
