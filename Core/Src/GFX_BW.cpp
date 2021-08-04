@@ -2,7 +2,34 @@
 
 #include <cmath>
 
+#include "font.hpp"
+
 namespace gfx {
+//
+// String drawing
+//
+constexpr char lastPrintableSign = '~';
+constexpr uint8_t fontSize = 1;
+void drawChar(OLED_SSD1306<I2C_Handler>& oled, int16_t x, int16_t y, char ch, PixelColor color) {
+    if (ch > lastPrintableSign) {
+        return;
+    }
+
+    for (uint8_t i = 0; i < font[1]; i++) {
+        uint8_t line = font[(ch - 0x20) * font[1] + i + 2];
+
+        for (uint8_t j = 0; j < font[0]; j++, line >>= 1) {
+            if ((line & 1) != 0) {
+                if constexpr (fontSize == 1) {
+                    oled.drawPixel(x + i, y + j, color);
+                } else {
+                    drawFillRectangle(oled, x + i * fontSize, y + j * fontSize, fontSize, fontSize, color);
+                }
+            }
+        }
+    }
+}
+
 //
 // Line drawing
 //
