@@ -104,7 +104,8 @@ int main(void)
 
   oled.clear(PixelColor::BLACK);
 
-  gfx::drawLine(oled, 10, 10, 100, 50, PixelColor::WHITE);
+  gfx::drawCircle(oled, 60, 30, 20, PixelColor::WHITE);
+  gfx::drawChar(oled, 60, 30, 'm', PixelColor::WHITE);
 
   oled.display();
   /* USER CODE END 2 */
