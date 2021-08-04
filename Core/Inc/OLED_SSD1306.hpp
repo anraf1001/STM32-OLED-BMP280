@@ -102,7 +102,7 @@ void OLED_SSD1306<T>::sendBuffer() {
 
 template <typename T>
 void OLED_SSD1306<T>::drawPixel(int16_t x, int16_t y, PixelColor color) {
-    if (x > 0 && x < oled::LCDWIDTH && y > 0 && y < oled::LCDHEIGHT) {
+    if (x >= 0 && x < oled::LCDWIDTH && y >= 0 && y < oled::LCDHEIGHT) {
         switch (color) {
         case PixelColor::WHITE:
             buffer_[positionInBuffer(x, y)] |= prepareColorByte(y);

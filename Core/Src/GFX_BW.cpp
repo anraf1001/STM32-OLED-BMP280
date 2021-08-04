@@ -1,6 +1,7 @@
 #include "GFX_BW.hpp"
 
 #include <cmath>
+#include <string>
 
 #include "font.hpp"
 
@@ -27,6 +28,15 @@ void drawChar(OLED_SSD1306<I2C_Handler>& oled, int16_t x, int16_t y, char ch, Pi
                 }
             }
         }
+    }
+}
+
+void drawString(OLED_SSD1306<I2C_Handler>& oled, int16_t x, int16_t y, std::string_view str, PixelColor color) {
+    int16_t xTmp = x;
+
+    for (auto letter : str) {
+        drawChar(oled, xTmp, y, letter, color);
+        xTmp += font[1] * fontSize + 1;
     }
 }
 

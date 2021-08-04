@@ -104,8 +104,8 @@ int main(void)
 
   oled.clear(PixelColor::BLACK);
 
-  gfx::drawCircle(oled, 60, 30, 20, PixelColor::WHITE);
-  gfx::drawChar(oled, 60, 30, 'm', PixelColor::WHITE);
+  gfx::drawString(oled, 0, 10, "Press.: 1013.25 hPa", PixelColor::WHITE);
+  gfx::drawString(oled, 0, 20, "Temp.: 20 C", PixelColor::WHITE);
 
   oled.display();
   /* USER CODE END 2 */
