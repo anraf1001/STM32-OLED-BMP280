@@ -26,6 +26,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "BMP280.hpp"
 #include "GFX_BW.hpp"
 #include "I2C_HandleInterface.hpp"
 #include "I2C_Handler.hpp"
@@ -49,7 +50,9 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+float temperature;
+float pressure;
+char message[32];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -101,19 +104,37 @@ int main(void)
   /* USER CODE BEGIN 2 */
   I2C_Handler i2c1Handler{&hi2c1};
   OLED_SSD1306 oled{&i2c1Handler};
+  BMP280 bmp280{&i2c1Handler, 0x76};
 
   oled.clear(PixelColor::BLACK);
-
-  gfx::drawString(oled, 0, 10, "Press.: 1013.25 hPa", PixelColor::WHITE);
-  gfx::drawString(oled, 0, 20, "Temp.: 20 C", PixelColor::WHITE);
-
   oled.display();
+
+  uint32_t bmp280Timer = HAL_GetTick();
+  uint32_t oledTimer = HAL_GetTick();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  if (HAL_GetTick() - bmp280Timer > 10) {
+		  bmp280Timer = HAL_GetTick();
+
+		  auto m = bmp280.readPressureAndTemperature();
+		  temperature = m.first;
+		  pressure = m.second;
+	  }
+
+	  if (HAL_GetTick() - oledTimer > 200){
+		  oledTimer = HAL_GetTick();
+
+		  oled.clear(PixelColor::BLACK);
+		  sprintf(message, "Press: %.2f hPa", pressure);
+		  gfx::drawString(oled, 0, 10, message, PixelColor::WHITE);
+		  sprintf(message, "Temp: %.2f C", temperature);
+		  gfx::drawString(oled, 0, 20, message, PixelColor::WHITE);
+		  oled.display();
+	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

@@ -13,6 +13,7 @@ public:
 
     HAL_Status Mem_Write(uint16_t devAddress, uint16_t memAddress, uint16_t memAddSize, uint8_t* data, uint16_t size);
     HAL_Status Mem_Write_DMA(uint16_t devAddress, uint16_t memAddress, uint16_t memAddSize, uint8_t* data, uint16_t size);
+    HAL_Status Mem_Read(uint16_t devAddress, uint16_t memAddress, uint16_t memAddSize, uint8_t* data, uint16_t size);
 
 private:
     I2C_HandleTypeDef* hi2c_;
